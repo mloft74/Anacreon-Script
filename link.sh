@@ -36,7 +36,6 @@ mpv_dir="${HOME}/.config/mpv"
 
 # $1: repo dir to traverse
 # $2: repo to link files into
-# TODO
 ln_dir () {
     for file in $(find "$1" -name '.git*' -prune -o -type f -print)
     do

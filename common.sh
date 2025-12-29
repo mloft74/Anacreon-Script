@@ -32,7 +32,7 @@ run_cmd_always () {
 run_cmd () {
     if [ "${dry}" = "TRUE" ]
     then
-        echo "${@}"
+        echo "[RUN] ${@}"
     else
         run_cmd_always "${@}"
     fi

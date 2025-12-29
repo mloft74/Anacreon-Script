@@ -60,6 +60,7 @@ safe_link() {
         realdest=$(run_cmd_always realpath -m "${2}")
         if [ "${realdest}" != "${1}" ]
         then
+            echo "[NOTICE] ${2} currently links to ${realdest}"
             replace_with_symlink "${1}" "${2}"
         fi
     elif [ -f "${2}" ]

@@ -72,8 +72,8 @@ end
 -- Generates a filename (without extension) for both audio and image.
 -- Removes non-word characters using gsub and appends timings.
 function encoder.gen_name(start_time, end_time)
-  start_time = string.format('%.3f', start_time):gsub("%.", "s") .. 'ms'
-  end_time = string.format('%.3f', end_time):gsub("%.", "s") .. 'ms'
+  start_time = tools.format_seconds_milliseconds(start_time)
+  end_time = tools.format_seconds_milliseconds(end_time)
   local stem = mp.get_property("filename/no-ext"):gsub('[%p%s%c]', '')
   return string.format('%s_%s_%s', stem, start_time, end_time)
 end

@@ -7,7 +7,7 @@ local tools = {}
 
 function tools.dlog(...)
   if opts.DEBUG_MODE == true then
-    print(...)
+    print('[DEBUG] ' .. ...)
   end
 end
 
@@ -31,6 +31,10 @@ function tools.format_time(raw_seconds, are_ms_needed)
   end
 
   return formatted_time
+end
+
+function tools.format_seconds_milliseconds(seconds)
+  return string.format('%.3f', seconds):gsub("%.", "s") .. 'ms'
 end
 
 return tools

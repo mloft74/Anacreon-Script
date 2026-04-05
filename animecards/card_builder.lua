@@ -59,11 +59,11 @@ local function format_sentence(lines, noteid)
   end
 end
 
-function card_builder.construct(lines, noteid, start_time, media_name)
+function card_builder.construct(lines, noteid, start_time, audio_name, image_name)
   local fields = {
     [opts.SENTENCE_FIELD] = format_sentence(lines, noteid),
-    [opts.IMAGE_FIELD] = '<img src=' .. media_name .. '.' .. opts.IMAGE_FORMAT .. '>',
-    [opts.SENTENCE_AUDIO_FIELD] = '[sound:' .. media_name .. '.mp3]',
+    [opts.SENTENCE_AUDIO_FIELD] = '[sound:' .. audio_name .. '.mp3]',
+    [opts.IMAGE_FIELD] = '<img src=' .. image_name .. '.' .. opts.IMAGE_FORMAT .. '>',
   }
 
   if opts.WRITE_MISCINFO == true then

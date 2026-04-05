@@ -35,6 +35,7 @@ local clip = require 'clipboard'            -- Clipboard handling, platform dete
 local enc = require 'encoder'               -- Media creation (audio, image, filenames)
 local opts = require 'script_options'       -- Default script options
 local sub_obs = require 'subtitle_observer' -- Stores subtitle information
+local tools = require 'tools'               -- Tools
 
 -- 'input' doesn't exist in mpv version < v0.39
 local has_input, input = pcall(require, 'mp.input')
@@ -66,14 +67,17 @@ local function process_cards(note_ids)
   end
 
   -- Creating media
-  local media_name = enc.gen_name(range_start, range_end)
-  enc.create_audio(media_name, range_start, range_end)
-  enc.create_image(media_name, current_time)
+  local audio_name = enc.gen_name(range_start, range_end)
+  local image_name = string.format('%s_%s', audio_name, tools.format_seconds_milliseconds(current_time))
+  tools.dlog('audio_name: ' .. audio_name)
+  tools.dlog('image_name: ' .. image_name)
+  enc.create_audio(audio_name, range_start, range_end)
+  enc.create_image(image_name, current_time)
 
   -- Updating anki cards
   for _, noteid in ipairs(note_ids) do
     local word = anki.get_field_value(noteid, opts.FRONT_FIELD)
-    local fields = builder.construct(lines, noteid, range_start, media_name)
+    local fields = builder.construct(lines, noteid, range_start, audio_name, image_name)
 
     -- Ensures the card is not focused before updating
     -- Otherwise, for some reasons, it will not be updated
@@ -90,7 +94,7 @@ local function process_cards(note_ids)
   end
 
   -- Autoplay audio if required
-  enc.autoplay(media_name)
+  enc.autoplay(audio_name)
 end
 
 local function handle_last_card() -- ctrl+v
